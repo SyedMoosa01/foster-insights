@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+import { Modal } from "../components/common/Modal";
 import "../styles/methodology.css";
 
 interface MetricRow {
@@ -53,7 +56,7 @@ const metricGroups: MetricGroup[] = [
       {
         metric: "Recently inactive",
         formula:
-          "Last activity < reporting date − 30, 60, or 90 days",
+          "No recorded activity, or last activity earlier than the selected 30, 60, or 90-day cutoff",
         explanation:
           "The home had no placement activity during the selected inactivity window.",
       },
@@ -186,7 +189,7 @@ const metricGroups: MetricGroup[] = [
       {
         metric: "Normalized metric",
         formula:
-          "(County value − minimum) ÷ (maximum − minimum)",
+          "(County value − minimum) ÷ (maximum − minimum); 0.5 when all values are equal",
         explanation:
           "Converts different county measures to a common scale between 0 and 1.",
       },
@@ -200,7 +203,7 @@ const metricGroups: MetricGroup[] = [
       {
         metric: "Combined county match",
         formula:
-          "(Score₁ × Score₂ × ... × Scoreₙ)^(1 ÷ n)",
+          "Geometric mean of selected metric scores, using 0.001 as the minimum component score",
         explanation:
           "Uses a geometric mean so one strong result cannot fully cancel a poor result.",
       },
@@ -209,6 +212,9 @@ const metricGroups: MetricGroup[] = [
 ];
 
 export function MethodologyPage() {
+  const [futureIntegrationsOpen, setFutureIntegrationsOpen] =
+    useState(false);
+
   return (
     <>
       <div className="hero methodology-hero">
@@ -222,6 +228,32 @@ export function MethodologyPage() {
           </p>
         </div>
       </div>
+
+      <section className="methodology-section">
+        <div className="card">
+          <div className="section-heading">
+            <div>
+              <h2>Future integrations</h2>
+
+              <p className="muted">
+                Review additional features that could make
+                Foster Insights workflows faster, more
+                consistent, and easier to manage.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className="btn primary"
+              onClick={() =>
+                setFutureIntegrationsOpen(true)
+              }
+            >
+              View future integrations
+            </button>
+          </div>
+        </div>
+      </section>
 
       <section className="methodology-section">
         <div className="methodology-section-heading">
@@ -293,7 +325,7 @@ export function MethodologyPage() {
         </div>
 
         <div className="methodology-groups">
-          {metricGroups.map((group, index) => (
+          {metricGroups.map((group) => (
             <details
               className="methodology-group"
               key={group.title}
@@ -327,14 +359,18 @@ export function MethodologyPage() {
                     {group.metrics.map((metric) => (
                       <tr key={metric.metric}>
                         <td>
-                          <strong>{metric.metric}</strong>
+                          <strong>
+                            {metric.metric}
+                          </strong>
                         </td>
 
                         <td>
                           <code>{metric.formula}</code>
                         </td>
 
-                        <td>{metric.explanation}</td>
+                        <td>
+                          {metric.explanation}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -368,6 +404,210 @@ export function MethodologyPage() {
           </p>
         </div>
       </section>
+
+      <Modal
+        open={futureIntegrationsOpen}
+        title="Future integrations"
+        description="Additional features that could reduce repetitive work and support Foster Insights staff."
+        width="800px"
+        onClose={() =>
+          setFutureIntegrationsOpen(false)
+        }
+      >
+        <div className="methodology-future-work">
+          <p>
+            Due to the fast turnaround, this web
+            application focuses on converting the provided
+            CSV datasets into practical recruitment and
+            retention metrics. The calculations and
+            thresholds reflect my understanding of the
+            available data and demonstrate how the
+            information could support staff decisions.
+          </p>
+
+          <p>
+            As discussed in the email, a database was not
+            set up because of the time constraint. A
+            production version could securely store and
+            process data through a database instead of
+            requiring repeated CSV uploads.
+          </p>
+
+          <div className="methodology-future-grid">
+            <article>
+              <h3>Secure database integration</h3>
+
+              <p>
+                Store provider, child, placement, survey,
+                outreach, and recruitment records in a
+                secure database with validation, backups,
+                encryption, audit logs, and role-based
+                access.
+              </p>
+            </article>
+
+            <article>
+              <h3>Automated data pipelines</h3>
+
+              <p>
+                Import and validate updated data
+                automatically, reducing repeated file
+                processing and keeping dashboards current.
+              </p>
+            </article>
+
+            <article>
+              <h3>Recruitment forms</h3>
+
+              <p>
+                Add online recruitment and application
+                forms with document collection, application
+                status tracking, assignments, and automated
+                follow-up steps.
+              </p>
+            </article>
+
+            <article>
+              <h3>Optional provider surveys</h3>
+
+              <p>
+                Send optional surveys to understand why
+                foster homes leave, become inactive, decline
+                placements, or choose not to renew.
+              </p>
+            </article>
+
+            <article>
+              <h3>Closure reason tracking</h3>
+
+              <p>
+                Record and analyze reasons homes leave so
+                staff can identify recurring issues and
+                understand what support could have improved
+                retention.
+              </p>
+            </article>
+
+            <article>
+              <h3>Automated reminders</h3>
+
+              <p>
+                Automatically send reminders for license
+                renewals, missing forms, surveys,
+                application steps, provider outreach, and
+                incomplete follow-up work.
+              </p>
+            </article>
+
+            <article>
+              <h3>AI-assisted calling and texting</h3>
+
+              <p>
+                Use approved AI-assisted calling and
+                texting workflows for repetitive outreach,
+                while routing complex questions and
+                sensitive cases to staff.
+              </p>
+            </article>
+
+            <article>
+              <h3>Task and assignment management</h3>
+
+              <p>
+                Allow staff to assign follow-up work, add
+                notes, track contact attempts, set due
+                dates, receive alerts, and monitor
+                incomplete tasks.
+              </p>
+            </article>
+
+            <article>
+              <h3>Monthly reporting</h3>
+
+              <p>
+                Automatically generate monthly summaries
+                showing how many homes joined, renewed,
+                became inactive, or left across each county
+                and the state overall.
+              </p>
+            </article>
+
+            <article>
+              <h3>Recruitment and retention trends</h3>
+
+              <p>
+                Compare changes over time and identify
+                counties experiencing home loss, increasing
+                demand, low engagement, or repeated
+                placement challenges.
+              </p>
+            </article>
+
+            <article>
+              <h3>Multi-state support</h3>
+
+              <p>
+                Extend the platform to other states using
+                configurable reporting dates, forms,
+                thresholds, terminology, workflows, and
+                program rules.
+              </p>
+            </article>
+
+            <article>
+              <h3>Performance and scalability</h3>
+
+              <p>
+                Add caching, pagination, background jobs,
+                optimized database queries, asynchronous
+                processing, and scalable infrastructure for
+                larger datasets.
+              </p>
+            </article>
+
+            <article>
+              <h3>Security and reliability</h3>
+
+              <p>
+                Add authentication, role-based permissions,
+                rate limiting, stronger input validation,
+                monitoring, error tracking, automated
+                backups, and secure data handling.
+              </p>
+            </article>
+
+            <article>
+              <h3>Automated testing and CI/CD</h3>
+
+              <p>
+                Add broader frontend and backend testing,
+                automated deployment checks, staging
+                environments, and safer production
+                releases.
+              </p>
+            </article>
+
+            <article>
+              <h3>AI-assisted summaries</h3>
+
+              <p>
+                Generate clear summaries of county and
+                statewide changes while showing the
+                underlying metrics used for every
+                conclusion.
+              </p>
+            </article>
+          </div>
+
+          <p>
+            These integrations could reduce repetitive
+            manual work, improve consistency, and help
+            Foster Insights employees spend more time on
+            important recruitment, retention, and provider
+            support work.
+          </p>
+        </div>
+      </Modal>
     </>
   );
 }
