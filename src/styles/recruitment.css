@@ -1,0 +1,202 @@
+/* Recruitment feature */
+
+.recruitment-hero {
+  align-items: flex-start;
+}
+
+.recruitment-filters {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    230px
+    auto;
+  align-items: center;
+}
+
+.recruitment-list {
+  display: grid;
+  gap: 11px;
+}
+
+.recruitment-row {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface);
+}
+
+.recruitment-row-main {
+  display: grid;
+  width: 100%;
+  grid-template-columns:
+    36px
+    minmax(160px, 0.7fr)
+    minmax(0, 2fr)
+    auto
+    24px;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 18px;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.recruitment-row-main:hover {
+  background: #f8fafc;
+}
+
+.recruitment-row-main:focus-visible {
+  outline: 3px solid
+    rgba(37, 99, 235, 0.18);
+  outline-offset: -3px;
+}
+
+.recruitment-rank {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 10px;
+  color: #53637c;
+  background: #f0f4fa;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.recruitment-event-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.recruitment-score {
+  color: #102548;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.simple-chevron {
+  display: inline-block;
+  color: #65738a;
+  font-size: 1.25rem;
+  transition: transform 0.16s ease;
+}
+
+.simple-chevron.open {
+  transform: rotate(180deg);
+}
+
+.recruitment-row-details {
+  padding: 15px 18px 18px;
+  border-top: 1px solid #edf1f7;
+  background: #fbfcff;
+}
+
+.recruitment-detail-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-detail {
+  padding: 13px;
+  border: 1px solid #dde5f1;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.metric-detail.triggered {
+  border-color: #bdcbed;
+  background: #f6f8ff;
+}
+
+.metric-detail-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.metric-detail h3 {
+  margin: 0;
+  color: #243b64;
+  font-size: 0.9rem;
+}
+
+.metric-detail p {
+  margin: 7px 0 0;
+  color: #607088;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.score-rule {
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid #cbd8f1;
+  border-radius: 12px;
+  background: #f3f7ff;
+  font-weight: 800;
+}
+
+.modal-metric-list {
+  display: grid;
+  gap: 10px;
+}
+
+.modal-metric {
+  display: grid;
+  grid-template-columns:
+    38px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #dde5f1;
+  border-radius: 12px;
+}
+
+.modal-metric > b {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 10px;
+  color: #244aab;
+  background: #eaf0ff;
+}
+
+.modal-metric h3 {
+  margin: 0 0 5px;
+  color: #243b64;
+  font-size: 0.95rem;
+}
+
+.modal-metric p {
+  margin: 0;
+  color: #607088;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  .recruitment-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .recruitment-row-main {
+    grid-template-columns:
+      36px minmax(0, 1fr) auto 24px;
+  }
+
+  .recruitment-event-chips {
+    grid-column: 2 / -1;
+  }
+
+  .recruitment-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

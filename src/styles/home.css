@@ -1,0 +1,136 @@
+/* Dashboard navigation */
+
+.home-dashboard-heading {
+  align-items: flex-start;
+}
+
+.home-heading-with-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.home-heading-with-info h2 {
+  margin: 0;
+}
+
+.home-info-button {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--primary);
+  background: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.home-info-button:hover {
+  border-color: var(--primary);
+  background: #eaf3ff;
+}
+
+.home-info-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+  outline-offset: 2px;
+}
+
+.home-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-dashboard-card {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 200px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--text);
+  background: #ffffff;
+  box-shadow: 0 7px 22px rgba(15, 23, 42, 0.06);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.home-dashboard-card:hover {
+  border-color: var(--primary);
+  background: #f8fbff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.home-dashboard-card:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+  outline-offset: 3px;
+}
+
+.home-dashboard-card-content {
+  display: grid;
+  gap: 10px;
+}
+
+.home-dashboard-card-content strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.home-dashboard-card-content > span {
+  display: block;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.home-dashboard-card-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--primary);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.home-dashboard-card-action > span:last-child {
+  font-size: 1.2rem;
+  transition: transform 160ms ease;
+}
+
+.home-dashboard-card:hover
+  .home-dashboard-card-action
+  > span:last-child {
+  transform: translateX(4px);
+}
+
+@media (max-width: 760px) {
+  .home-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-dashboard-card {
+    min-height: 180px;
+    padding: 20px;
+  }
+}
+

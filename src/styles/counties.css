@@ -1,0 +1,280 @@
+/* County comparison builder */
+
+.comparison-builder .section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.comparison-builder-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.comparison-rules {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.comparison-rule {
+  display: grid;
+  grid-template-columns:
+    34px
+    minmax(220px, 1fr)
+    minmax(150px, 220px)
+    auto;
+  gap: 12px;
+  align-items: end;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.comparison-rule-number {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  align-self: center;
+  border-radius: 50%;
+  background: #e8efff;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.comparison-rule label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.comparison-rule label > span {
+  color: #475467;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.comparison-rule select {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+}
+
+.comparison-remove {
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.comparison-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.comparison-summary-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comparison-summary-item {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #244b95;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.back-link {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  padding: 0;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.county-filters {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.county-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.county-search input {
+  min-width: 255px;
+}
+
+.county-filters .filter-count {
+  margin-left: 4px;
+}
+.county-cell {
+  font-family: inherit;
+}
+
+.county-cell.high,
+.county-cell.medium,
+.county-cell.low {
+  border: 0;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .comparison-builder .section-heading {
+    flex-direction: column;
+  }
+
+  .comparison-builder-actions {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .comparison-rule {
+    grid-template-columns: 34px 1fr;
+  }
+
+  .comparison-rule label,
+  .comparison-remove {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .kpi-card-button,
+  .retention-card {
+    min-height: 130px;
+  }
+
+  .status-pill {
+    display: none;
+  }
+}
+
+.county-results-table .table-wrap {
+            position: relative;
+            max-height: calc(100vh - 180px);
+            overflow: auto;
+            scrollbar-gutter: stable both-edges;
+          }
+
+          .county-results-table table {
+            border-collapse: separate;
+            border-spacing: 0;
+          }
+
+          .county-results-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+          }
+
+          .county-results-table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #f9fafb;
+            box-shadow:
+              0 1px 0 var(--line),
+              0 3px 8px rgba(15, 23, 42, 0.08);
+          }
+
+          .county-results-table th:first-child,
+          .county-results-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background: white;
+          }
+
+          .county-results-table thead th:first-child {
+            z-index: 30;
+            background: #f9fafb;
+          }
+
+          .county-results-table tbody tr:hover td:first-child {
+            background: #f8fbff;
+          }
+
+
+.local-licensed-homes-table .table-wrap {
+            position: relative;
+            max-height: 420px;
+            overflow: auto;
+            scrollbar-gutter: stable both-edges;
+          }
+
+          .local-licensed-homes-table table {
+            border-collapse: separate;
+            border-spacing: 0;
+          }
+
+          .local-licensed-homes-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+          }
+
+          .local-licensed-homes-table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #f9fafb;
+            box-shadow:
+              0 1px 0 var(--line),
+              0 3px 8px rgba(15, 23, 42, 0.08);
+          }
+
+          .local-licensed-homes-table th:first-child,
+          .local-licensed-homes-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background: white;
+          }
+
+          .local-licensed-homes-table thead th:first-child {
+            z-index: 30;
+            background: #f9fafb;
+          }
+
+          .local-licensed-homes-table tbody tr:hover td:first-child {
+            background: #f8fbff;
+          }
+
+
+.county-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
