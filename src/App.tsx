@@ -227,8 +227,12 @@ export default function App() {
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="notice">
-          Loading sample data…
+        <div>
+          <p>Loading sample data...</p>
+          <p>
+            If you opened this app on Vercel, the data may take a minute or two
+            to load because the backend runs on a free-tier service.
+          </p>
         </div>
       );
     }

@@ -4,6 +4,26 @@ Foster Insights is a full-stack dashboard for analyzing foster-home recruitment,
 
 The backend validates CSV files, calculates shared metrics, and sends one normalized analytics model to the frontend.
 
+## Live Application
+
+Frontend:
+
+```text
+https://foster-insights.vercel.app
+```
+
+Backend:
+
+```text
+https://foster-insights-1.onrender.com
+```
+
+GitHub Repository:
+
+```text
+https://github.com/SyedMoosa01/foster-insights
+```
+
 ## Features
 
 * Statewide foster-care summary
@@ -11,23 +31,28 @@ The backend validates CSV files, calculates shared metrics, and sends one normal
 * Foster-home retention analysis
 * Provider engagement and inactivity tracking
 * License expiration monitoring
+* Recently lapsed license tracking
 * Out-of-county placement analysis
 * County and provider detail pages
 * CSV upload and validation
-* Search and filtering
+* Search, filtering, and sorting
 * Responsive dashboard
 * Transparent metric definitions
+* Future integrations overview
 
 ## Recruitment Urgency Score
 
-Each county receives one point for every active recruitment concern:
+Each county receives one point for every triggered recruitment event:
 
-* Losing foster homes
-* Age-range gap
+* Net loss of foster homes
 * High out-of-county placement rate
-* Licenses expiring within the selected window
-* Low active-use rate
-* Increased foster-home placement demand
+* At least one license expiring within 30 days
+* High share of low-engagement homes
+* Recruitment stalled
+
+Recruitment stalled means that the county had foster-home placements during the latest completed six months but added no new foster-home licenses during that period.
+
+Scores range from 0 to 5.
 
 Counties are displayed in descending order by total urgency score.
 
@@ -49,6 +74,12 @@ Counties are displayed in descending order by total urgency score.
 * Pytest
 * Ruff
 
+### Hosting
+
+* Frontend: Vercel
+* Backend: Render
+* Source control: GitHub
+
 ## Architecture
 
 ```text
@@ -61,7 +92,7 @@ Normalized API response
 React dashboard
 ```
 
-Business calculations are handled in the backend. The frontend displays, sorts, searches, and filters the returned data.
+Business calculations are handled in the backend. The frontend displays, sorts, searches, filters, and presents the returned data.
 
 ## Data
 
@@ -77,7 +108,7 @@ Sample files are stored in:
 public/data/
 ```
 
-The reporting date is configured in:
+The reporting date and analytics thresholds are configured in:
 
 ```text
 backend/app/config.py
@@ -97,78 +128,113 @@ July 1, 2026
 * npm
 * Python 3.10 or later
 
-### Backend
+## Start the Backend
 
-Create a virtual environment:
+From the project root, create a virtual environment:
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it.
-
-Windows PowerShell:
+Activate it on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-macOS or Linux:
+Activate it on macOS or Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
-Install dependencies:
+Install backend dependencies:
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-Start the backend:
+Start the FastAPI backend:
 
 ```bash
 python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-API:
+The backend will run at:
 
 ```text
 http://localhost:8000
 ```
 
-API documentation:
+Health endpoint:
 
 ```text
-http://localhost:8000/docs
+http://localhost:8000/api/health
 ```
 
-### Frontend
+## Start the Frontend
 
-Open another terminal:
+Open a second terminal in the project root.
+
+Install frontend dependencies:
 
 ```bash
 npm install
+```
+
+Start the Vite development server:
+
+```bash
 npm run dev
 ```
 
-Open:
+The frontend will run at:
 
 ```text
 http://localhost:5173
 ```
 
-Both the frontend and backend must be running.
+Both the frontend and backend must be running at the same time.
 
-## Environment Variable
+## Environment Variables
+
+### Frontend
 
 The frontend uses:
+
+```text
+VITE_API_BASE_URL
+```
+
+For local development:
 
 ```text
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-Create a `.env.local` file to change the API URL.
+Create a `.env.local` file in the project root when a custom API URL is needed.
+
+The deployed Vercel frontend uses:
+
+```text
+VITE_API_BASE_URL=https://foster-insights-1.onrender.com
+```
+
+### Backend
+
+The backend uses:
+
+```text
+FRONTEND_URL
+```
+
+For the deployed application:
+
+```text
+FRONTEND_URL=https://foster-insights.vercel.app
+```
+
+This allows the Vercel frontend to communicate with the Render backend through FastAPI CORS configuration.
 
 ## API Endpoints
 
@@ -178,11 +244,13 @@ GET /api/sample
 POST /api/process
 ```
 
-`POST /api/process` accepts the child, placement, and provider CSV files.
+`GET /api/sample` loads the provided sample datasets.
+
+`POST /api/process` accepts the child, placement, and provider CSV files, validates them, calculates the analytics model, and returns the results to the frontend.
 
 ## Testing
 
-Frontend:
+### Frontend
 
 ```bash
 npm run typecheck
@@ -190,7 +258,17 @@ npm run lint
 npm run build
 ```
 
-Backend:
+### Backend
+
+Windows PowerShell:
+
+```powershell
+$env:PYTHONPATH="backend"
+pytest backend/tests
+ruff check backend
+```
+
+macOS or Linux:
 
 ```bash
 PYTHONPATH=backend pytest backend/tests
@@ -199,49 +277,97 @@ ruff check backend
 
 ## Deployment
 
-The frontend and backend can be deployed separately.
+### Frontend Deployment
 
-Possible frontend platforms:
+The frontend is deployed on Vercel.
 
-* Vercel
-* Netlify
-* Cloudflare Pages
+```text
+Framework: Vite
+Build command: npm run build
+Output directory: dist
+Install command: npm install
+```
 
-Possible backend platforms:
+Live frontend:
 
-* Render
-* Railway
-* Fly.io
-* Google Cloud Run
-* Azure App Service
-* AWS
+```text
+https://foster-insights.vercel.app
+```
 
-Before deployment:
+### Backend Deployment
 
-* Set the production `VITE_API_BASE_URL`
-* Add the frontend domain to the FastAPI CORS configuration
-* Confirm `/api/health` returns a successful response
-* Confirm CSV upload and dashboard filters work
+The backend is deployed on Render.
+
+Build command:
+
+```text
+pip install -r backend/requirements.txt
+```
+
+Start command:
+
+```text
+uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+```
+
+Live backend:
+
+```text
+https://foster-insights-1.onrender.com
+```
+
+Render environment variables:
+
+```text
+PYTHON_VERSION=3.12.8
+FRONTEND_URL=https://foster-insights.vercel.app
+```
+
+The Render root directory is left blank because the backend reads the sample CSV files from:
+
+```text
+public/data/
+```
 
 ## Privacy and Limitations
 
-* Only anonymous child and provider IDs should be displayed
+* Only anonymous child and provider IDs are displayed
 * Recruitment scores are prioritization indicators, not automated decisions
 * County mismatches do not measure placement quality or travel distance
 * License expiration does not explain why a foster home stopped operating
+* Active-day and licensed-day values come from the provider dataset
+* Recruitment thresholds are transparent prototype rules
 * Production use requires authentication, authorization, auditing, secure file handling, and additional data governance
 
-## Project Status
+## Future Integrations
 
-Foster Insights is a functional full-stack prototype.
+This application was completed within a fast turnaround using the provided CSV datasets.
+
+As discussed in the project email, a database was not implemented because of the time constraint.
 
 A production version could add:
 
-* A relational database
-* Authentication and user roles
-* Historical data tracking
+* A secure relational database
+* Authentication and role-based access
+* Recruitment and application forms
+* Optional provider surveys
+* Tracking of why foster homes leave or become inactive
+* Automated renewal and follow-up reminders
+* AI-assisted calling and texting for repetitive outreach
+* Staff assignments, notes, due dates, and task tracking
+* Monthly county and statewide summaries
+* Historical recruitment and retention trends
+* Automated data imports
 * Audit logs
-* Scheduled imports
-* Automated alerts
-* Monitoring
-* Additional placement and provider variables
+* Rate limiting
+* Monitoring and error tracking
+* Caching and pagination
+* Background processing
+* Automated testing and CI/CD
+* Multi-state support
+
+These additions could reduce repetitive manual work and help Foster Insights staff focus on higher-priority recruitment, retention, and provider-support activities.
+
+## Project Status
+
+Foster Insights is a functional full-stack prototype deployed with a React and TypeScript frontend on Vercel and a Python FastAPI backend on Render.
